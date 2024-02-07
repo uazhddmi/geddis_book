@@ -25,10 +25,15 @@ class RetailItem:
     def __str__(self):
         return f'{self.__description} in quantity of {self.__quantity} pcs is available for ${self.__price}'
 
-item1 = RetailItem('Пиджак', 12, 59.95)
-item2 = RetailItem('Дизайнерские джинсы', 40, 34.95)
-item3 = RetailItem('Рубашка', 20, 24.95)
+def main():
+    item1 = RetailItem('Пиджак', 12, 59.95)
+    item2 = RetailItem('Дизайнерские джинсы', 40, 34.95)
+    item3 = RetailItem('Рубашка', 20, 24.95)
 
-print(item1)
-print(item2)
-print(item3)
+    print(item1)
+    print(item2)
+    print(item3)
+
+
+if __name__=='__main__':
+    main()
