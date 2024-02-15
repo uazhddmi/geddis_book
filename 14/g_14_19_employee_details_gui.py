@@ -72,7 +72,7 @@ class EmployeeDetails:
         employee_list = []
         conn = None
         try:
-            conn = sqlite3.connect('employee.db')
+            conn = sqlite3.connect('employees.db')
             cur = conn.cursor()
 
             cur.execute('SELECT Name FROM Employees')

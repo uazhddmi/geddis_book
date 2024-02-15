@@ -4,7 +4,7 @@ import  sqlite3
 def main():
     conn = None
     try:
-        conn = sqlite3.connect('employee.db')
+        conn = sqlite3.connect('employees.db')
         cur = conn.cursor()
 
         cur.execute('PRAGMA foreign_keys=ON')
