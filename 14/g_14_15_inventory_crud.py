@@ -1,6 +1,5 @@
 import sqlite3
 
-
 MIN_CHOICE = 1
 MAX_CHOICE = 5
 CREATE = 1
@@ -8,6 +7,7 @@ READ = 2
 UPDATE = 3
 DELETE = 4
 QUIT = 5
+
 
 def main():
     choice = 0
@@ -24,6 +24,7 @@ def main():
         elif choice == DELETE:
             delete()
 
+
 def display_menu():
     print('\n------Inventory menu------')
     print('1. Create new item. ')
@@ -31,6 +32,7 @@ def display_menu():
     print('3. Update item. ')
     print('4. Delete item. ')
     print('5. Exit. ')
+
 
 def get_menu_choice():
     choice = int(input('Enter your choice: '))
@@ -40,16 +42,19 @@ def get_menu_choice():
 
     return choice
 
+
 def create():
     print('Create new position')
     name = input('Item name: ')
     price = float(input('Item price: '))
     insert_row(name, price)
 
+
 def read():
     name = input('Enter Item\'s name you are looking for. ')
     num_found = display_item(name)
     print(f'{num_found} row(s) have found')
+
 
 def update():
     read()
@@ -61,6 +66,7 @@ def update():
     num_updated = update_row(selected_id, name, price)
     print(f'{num_updated} rows were updated')
 
+
 def delete():
     read()
     selected_id = int(input('Enter ID of position you want to delete. '))
@@ -69,6 +75,7 @@ def delete():
     if sure.lower() == 'y':
         num_deleted = delete_row(selected_id)
         print(f'{num_deleted} rows were deleted.')
+
 
 def insert_row(name, price):
     conn = None
@@ -96,7 +103,7 @@ def display_item(name):
         cur = conn.cursor()
         cur.execute('''SELECT * FROM Inventory
                     WHERE ItemName == ?''',
-                    (name, ))
+                    (name,))
         results = cur.fetchall()
 
         for row in results:
@@ -106,9 +113,10 @@ def display_item(name):
     finally:
         if conn is not None:
             conn.close()
-    return  len(results)
+    return len(results)
 
-def update_row(id,id_name, price):
+
+def update_row(uid, id_name, price):
     conn = None
     try:
         conn = sqlite3.connect('inventory.db')
@@ -116,7 +124,7 @@ def update_row(id,id_name, price):
         cur.execute('''UPDATE Inventory
                 SET ItemName = ?, Price = ?
                 WHERE ItemID == ?''',
-                    (id_name, price, id))
+                    (id_name, price, uid))
         conn.commit()
         num_updated = cur.rowcount
     except sqlite3.Error as err:
@@ -125,25 +133,25 @@ def update_row(id,id_name, price):
         if conn is not None:
             conn.close()
 
-        return num_updated
+    return num_updated
 
-def delete_row(id):
+
+def delete_row(uid):
     conn = None
     try:
         conn = sqlite3.connect('inventory.db')
         cur = conn.cursor()
         cur.execute('''DELETE FROM Inventory
                     WHERE ItemId == ?''',
-                    (id,))
+                    (uid,))
         conn.commit()
-        num_delelted = cur.rowcount
+        num_deleted = cur.rowcount
     except sqlite3.Error as err:
         print('Database error', err)
     finally:
         if conn is not None:
             conn.close()
-
-        return num_delelted
+            return num_deleted
 
 
 if __name__ == '__main__':
