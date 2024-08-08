@@ -11,9 +11,10 @@ def is_prime(n):
 
 
 def main():
-    num = int(input('Enter your number: '))
-    res = is_prime(num)
-    print(f'{num}', 'is simple' if res == True else 'in\'t simple')
+    for i in range(1, 20):
+        if is_prime(i + 1):
+            print(i + 1, end=" ")
+    print()
 
 
 if __name__ == '__main__':
